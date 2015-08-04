@@ -635,7 +635,7 @@ void gen_test_file(char *path_prefix)
 }
 
 
-int gen_read_conf(char *path)
+int gen_read_conf(const char *path)
 {
     FILE *fp;
     char line[MAXLINELEN] = {0};
