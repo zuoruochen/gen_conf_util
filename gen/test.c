@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include "parse_conf.h"
 
-extern int whitelist;
-extern int upload_path;
 
 int main(int argc, char* argv[])
 {
@@ -22,12 +20,6 @@ int main(int argc, char* argv[])
     ret = parse_conf(argv[1]);
     if (ret) {
 		int i;
-		printf("\nwhitelist:\n");
-		for(i = 0 ; i  < whitelist; i++)
-			printf(" %s\n",WHITELIST[i]);
-		printf("\nupload_path:\n");
-		for(i = 0 ; i  < upload_path; i++)
-			printf(" %s\n",UPLOAD_PATH[i]);
 		printf("\nlog:\n");
 		printf("\nbaby : %s\n",BABY);
 		printf("\nmain : %s\n",MAIN);

@@ -13,8 +13,6 @@
 #include "parse_conf.h" 
 
 int linenum = 0;
-int whitelist = 0;
-int upload_path = 0;
 
 static int compare(const void *a, const void *b)
 {
@@ -108,11 +106,7 @@ static int parse_conf_per_scope(FILE *stream)
                 return 0;
             p = NULL;
 
-			if(strcmp(scopekey,"whitelist") == 0 ){
-				continue;
-			}else if(strcmp(scopekey,"upload_path") == 0 ){
-				continue;
-			}else if(strcmp(scopekey,"log") == 0 ){
+			if(strcmp(scopekey,"log") == 0 ){
 				continue;
 			}else if(strcmp(scopekey,"nba") == 0 ){
 				continue;
@@ -136,15 +130,7 @@ static int parse_conf_per_scope(FILE *stream)
                 goto error1;
             }
             char key[MAXVALUELEN];
-			if(strcmp(scopekey,"whitelist") == 0 ){
-                if (!get_key(line, p, key))
-                    goto error1;
-				strncpy(WHITELIST[whitelist++], key, strlen(key));
-			}else if(strcmp(scopekey,"upload_path") == 0 ){
-                if (!get_key(line, p, key))
-                    goto error1;
-				strncpy(UPLOAD_PATH[upload_path++], key, strlen(key));
-			}else if(strcmp(scopekey,"log") == 0 ){
+			if(strcmp(scopekey,"log") == 0 ){
                 char *m = NULL;
                 if((m = strstr(line,":")) != NULL){
                     if(!get_key(line, m, key))
@@ -167,7 +153,7 @@ static int parse_conf_per_scope(FILE *stream)
                 char *m = NULL;
                 if((m = strstr(line,":")) != NULL){
                     if(!get_key(line, m, key))
-                        goto error1;
+                    goto error1;
 					if (strcmp(key, "jodan") == 0) {
 						if(!get_key(m+1, line+strlen(line)-2,JODAN))
 							goto error1;
@@ -208,8 +194,6 @@ int parse_conf(const char * path)
 	ret = parse_conf_per_scope(fp);
 	fclose(fp);
 	if(ret) {
-		qsort(WHITELIST,whitelist,sizeof(WHITELIST[0]),compare);
-		qsort(UPLOAD_PATH,upload_path,sizeof(UPLOAD_PATH[0]),compare);
 	}
 	return ret;
 }

@@ -394,8 +394,8 @@ void  gen_func_parse_conf_per_scope(FILE *fp)
         fprintf(fp,"%s%s%s\n","if(strcmp(scopekey,\"",kv_scope[0].scope_key,"\") == 0 ){" );
         fprintf(fp,"%s\n", "                char *m = NULL;\n\
                 if((m = strstr(line,\":\")) != NULL){\n\
-                if(!get_key(line, m, key))\n\
-                goto error1;");
+                    if(!get_key(line, m, key))\n\
+                        goto error1;");
         int j;
         print_tab(5, fp);
         fprintf(fp,"%s%s%s\n","if (strcmp(key, \"",kv_scope[0].key[0],"\") == 0) {" );
@@ -414,16 +414,16 @@ void  gen_func_parse_conf_per_scope(FILE *fp)
             fprintf(fp,"%s\n", "goto error1;");
         }
         fprintf(fp,"%s\n", "                    }else {\n\
-                    printf(\"line: %d, %s is unknown key word!\\n\",linenum,key);\n\
-                    return 0;\n\
-                }\n\
-            }");
+                        printf(\"line: %d, %s is unknown key word!\\n\",linenum,key);\n\
+                        return 0;\n\
+                    }\n\
+                }");
         int i;
         for(i = 1; i < key_value_scope_num; ++i){
             print_tab(3, fp);
             fprintf(fp,"%s%s%s\n","}else if(strcmp(scopekey,\"",kv_scope[i].scope_key,"\") == 0 ){" );
             fprintf(fp,"%s\n", "                char *m = NULL;\n\
-                    if((m = strstr(line,\":\")) != NULL){\n\
+                if((m = strstr(line,\":\")) != NULL){\n\
                     if(!get_key(line, m, key))\n\
                     goto error1;");
             int j;
@@ -436,7 +436,7 @@ void  gen_func_parse_conf_per_scope(FILE *fp)
             
             for(j = 1; j < kv_scope[i].n; ++j){
                 print_tab(5, fp);
-                fprintf(fp,"%s%s%s\n","if (strcmp(key, \"",kv_scope[i].key[j],"\") == 0) {" );
+                fprintf(fp,"%s%s%s\n","}else if (strcmp(key, \"",kv_scope[i].key[j],"\") == 0) {" );
                 print_tab(6, fp);
                 fprintf(fp,"%s%s%s\n", "if(!get_key(m+1, line+strlen(line)-2,",my_toupper(kv_scope[i].key[j]),"))");
                 print_tab(7, fp);
